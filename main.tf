@@ -1,29 +1,43 @@
-provider “vault” {
-  # It is strongly recommended to configure this provider through the
-  # environment variables described above, so that each user can have
-  # separate credentials set in the environment.
-  #
-  # This will default to using $VAULT_ADDR
-  # But can be set explicitly
-  # address = “https://vault.example.net:8200”
-        address = “http://todo_move_to_var:8200”
-        token = “todo_move_to_var”
+# main.tf
+
+provider "vault" {
+  alias = "v1"
+  #  Auth creds below can be set here directly, in the variables file (as shown currently), 
+  # or commented out and set as environment variables such as:
+  # $ export VAULT_ADDR=http://123.123.123.1:8200
+  # $ export VAULT_TOKEN=s.xxxxXXXXxxxxferJCj3Aljm7
+
+  #  address = var.vault_addr
+  #  token   = var.vault_token
 }
+
 # Create the namespace
-resource “vault_namespace” “ns1" {
-        path = “ns1”
+resource "vault_namespace" "ns1" {
+  provider = vault.v1
+  path     = var.namespace
+}
+
+provider "vault" {
+  alias = "v2"
+  # See above for credential recommendations for environment variables 
+  #  address   = var.vault_addr
+  #  token     = var.vault_token
+  namespace = vault_namespace.ns1.path
 }
 
 # Create the data for the policy
-data “vault_policy_document” “example” {
+data "vault_policy_document" "example" {
+  provider = vault.v2
   rule {
-    path         = “secret/*”
-    capabilities = [“create”, “read”, “update”, “delete”, “list”]
-    description  = “allow all on secrets”
+    path         = "secret/*"
+    capabilities = ["create", "read", "update", "delete", "list"]
+    description  = "allow all on secrets"
   }
 }
+
 # Implement the policy
-resource “vault_policy” “example” {
-  name   = “example_policy”
-  policy = “${data.vault_policy_document.example.hcl}”
+resource "vault_policy" "example" {
+  provider = vault.v2
+  name     = format("example_policy_01: %s", var.namespace)
+  policy   = data.vault_policy_document.example.hcl
 }
