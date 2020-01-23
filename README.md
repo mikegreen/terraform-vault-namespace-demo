@@ -14,4 +14,11 @@ We'll start with:
 1. Enable the KV secrets engine at a custom mount point
 1. Enable an authentication engine (which? TBD)
 
+## Usage
 
+1. Ensure terraform >= 0.12 is in your path
+1. `$ terraform apply -var="namespace=new_namespace_here"`
+1. This will create a namespace with your provided variable namespace name, create a policy `example_policy: new_namespace_here`
+1. TODO Create role
+1. TODO Enable KV engine
+1. TODO Enable auth engine
