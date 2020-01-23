@@ -1,4 +1,7 @@
 # main.tf
+# usage:
+# $ terraform apply -var="namespace=new_namespace_here"
+#
 
 provider "vault" {
   alias = "v1"
