@@ -16,6 +16,18 @@ output "vault_auth_backend_path" {
   value = [vault_auth_backend.example.path]
 }
 
+output "vault_approle_role" {
+  value = [vault_approle_auth_backend_role.example.role_name]
+}
+
+output "vault_approle_role_id" {
+  value = [vault_approle_auth_backend_role.example.role_id]
+}
+
+output "vault_approle_secret_id" {
+  value = [vault_approle_auth_backend_role_secret_id.id.secret_id]
+}
+
 output "vault_mount_path" {
   value = [vault_mount.example.path]
 }

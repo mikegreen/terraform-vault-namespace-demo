@@ -41,7 +41,7 @@ data "vault_policy_document" "example" {
 # Implement the policy
 resource "vault_policy" "example" {
   provider = vault.v2
-  name     = format("example_policy_01: %s", var.namespace)
+  name     = format("example_policy")
   policy   = data.vault_policy_document.example.hcl
 }
 
@@ -49,6 +49,17 @@ resource "vault_auth_backend" "example" {
   provider = vault.v2
   type     = "approle"
   path     = "approleNamespaceDemo"
+}
+
+resource "vault_approle_auth_backend_role" "example" {
+  backend        = vault_auth_backend.example.path
+  role_name      = "test-role"
+  token_policies = ["example_policy"]
+}
+
+resource "vault_approle_auth_backend_role_secret_id" "id" {
+  backend   = vault_auth_backend.example.path
+  role_name = vault_approle_auth_backend_role.example.role_name
 }
 
 # Create a KV secrets engine mount
