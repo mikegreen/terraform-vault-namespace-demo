@@ -12,6 +12,10 @@ output "vault_policy_name" {
   value = [vault_policy.example.name]
 }
 
+output "vault_auth_backend_path" {
+  value = [vault_auth_backend.example.path]
+}
+
 output "vault_mount_path" {
   value = [vault_mount.example.path]
 }
@@ -19,3 +23,4 @@ output "vault_mount_path" {
 output "vault_generic_secret_path" {
   value = [vault_generic_secret.secret.path]
 }
+

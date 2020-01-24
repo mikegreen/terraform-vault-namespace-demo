@@ -45,6 +45,12 @@ resource "vault_policy" "example" {
   policy   = data.vault_policy_document.example.hcl
 }
 
+resource "vault_auth_backend" "example" {
+  provider = vault.v2
+  type     = "approle"
+  path     = "approleNamespaceDemo"
+}
+
 # Create a KV secrets engine mount
 resource "vault_mount" "example" {
   provider    = vault.v2
@@ -68,4 +74,10 @@ resource "vault_generic_secret" "secret" {
     }
     EOT
 }
+
+
+
+
+
+
 
