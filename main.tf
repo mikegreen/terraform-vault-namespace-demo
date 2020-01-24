@@ -44,3 +44,28 @@ resource "vault_policy" "example" {
   name     = format("example_policy_01: %s", var.namespace)
   policy   = data.vault_policy_document.example.hcl
 }
+
+# Create a KV secrets engine mount
+resource "vault_mount" "example" {
+  provider    = vault.v2
+  path        = "secret"
+  type        = "kv"
+  description = "generic mount"
+}
+
+# Add a secret into the KV engine just created
+# Note, we need depends_on because TF does not know if this mount exists yet
+resource "vault_generic_secret" "secret" {
+  provider = vault.v2
+  path     = "secret/foo"
+  depends_on = [
+    vault_mount.example,
+  ]
+  data_json = <<EOT
+    {
+      "foo":  "bar",
+      "pizza": "cheese"
+    }
+    EOT
+}
+
