@@ -19,6 +19,6 @@ We'll start with:
 1. Ensure terraform >= 0.12 is in your path
 1. `$ terraform apply -var="namespace=new_namespace_here"`
 1. This will create a namespace with your provided variable namespace name, create a policy `example_policy: new_namespace_here`
-1. TODO Create role
-1. TODO Enable KV engine
-1. TODO Enable auth engine
+1. Create role
+1. Enable KV engine
+1. Enable approle auth engine with a role, and output secret_id for that role
