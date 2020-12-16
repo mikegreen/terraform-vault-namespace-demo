@@ -9,35 +9,50 @@ terraform {
   }
 }
 
+# Define vault provider at root level, so we can create namespaces within
 provider "vault" {
   alias = "vault-root"
-  # See above for credential recommendations for environment variables 
   address = var.vault_addr
   token   = var.vault_token
 }
 
+# Below, you have to repeat each of vault_namespace and namespace_bootstrap module
+# for each new namespace. This is because you can't currently pass a map/vars 
+# into a provider called from a module. 
+# Not very DRY
+# Update this to use for_each, when this gets done:
+# https://github.com/hashicorp/terraform/issues/24476
 
-## More samples to start with:
-# resource "vault_auth_backend" "example" {
-#   provider = vault.namespace01
-#   type     = "approle"
-#   path     = "approleNamespaceDemo"
+# 1st namespace
+resource "vault_namespace" "namespace01" {
+  provider = vault.vault-root
+  path     = "foo01"
+}
+
+module "namespace_bootstrap01" {
+  source = "./modules/namespace_bootstrap"
+  namespace = vault_namespace.namespace01.path
+}
+
+# 2nd namespace 
+resource "vault_namespace" "namespace02" {
+  provider = vault.vault-root
+  path     = "foo02"
+}
+
+module "namespace_bootstrap02" {
+  source = "./modules/namespace_bootstrap"
+  namespace = vault_namespace.namespace02.path
+}
+
+# # 3rd namespace 
+# resource "vault_namespace" "namespace03" {
+#   provider = vault.vault-root
+#   path     = "foo03"
 # }
 
-# resource "vault_approle_auth_backend_role" "example" {
-#   backend        = vault_auth_backend.example.path
-#   role_name      = "test-role"
-#   token_policies = ["example_policy"]
-# }
-
-# resource "vault_approle_auth_backend_role_secret_id" "id" {
-#   backend   = vault_auth_backend.example.path
-#   role_name = vault_approle_auth_backend_role.example.role_name
-# }
-
-
-# module "namespace_bootstrap" {
+# module "namespace_bootstrap03" {
 #   source = "./modules/namespace_bootstrap"
-
-#   namespaces = local.namespaces_to_manage
+#   namespace = vault_namespace.namespace03.path
 # }
+

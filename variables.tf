@@ -8,3 +8,7 @@ variable "vault_token" {
   type = string
   # default = "your_token_here"
 }
+
+variable "namespaces" {
+	type = list
+}
