@@ -35,29 +35,31 @@ output "namespace-token" {
   value = vault_token.namespace-token.client_token
 }
 
-# Create a KV secrets engine mount
-resource "vault_mount" "kv-v1" {
-  provider    = vault.namespace01
-  path        = "kv-v1"
-  type        = "kv"
-  description = "Example KV v1 secrets mount"
+# Create mounts defined in the variable mounts_to_mount
+# if you want to have TF work with manually created/existing:
+# $ terraform import vault_mount.all_the_mounts kv-v2 (where kv-v2 is the path)
+resource "vault_mount" "all_the_secrets" {
+  provider = vault.namespace01
+  for_each = toset(var.secrets_to_mount)
+  type = each.key
+  path = each.key
 }
 
-# Create a KV secrets engine mount
-resource "vault_mount" "kv-v2" {
-  provider    = vault.namespace01
-  path        = "kv-v2/"
-  type        = "kv-v2"
-  description = "Example KV v2 secrets mount"
-}
+# Create custom secret mount if you wish
+# resource "vault_mount" "kv-v1" {
+#   provider    = vault.namespace01
+#   path        = "kv-v1"
+#   type        = "kv"
+#   description = "Example KV v1 secrets mount"
+# }
 
-# Add a secret into the KV engine just created
-# Note, we need depends_on because TF does not know if this mount exists yet
+# Assuming the kv mount is enabled, add a secret into the KV engine just created
+# Note, we might need depends_on because TF does not know if this mount exists yet
 resource "vault_generic_secret" "secret" {
   provider = vault.namespace01
-  path     = "kv-v1/first-secret"
+  path     = "kv/first-secret"
   depends_on = [
-    vault_mount.kv-v1,
+    vault_mount.all_the_secrets,
   ]
   data_json = <<EOT
     {
@@ -65,5 +67,11 @@ resource "vault_generic_secret" "secret" {
       "pizza": "cheesey"
     }
     EOT
-}
+} 
 
+resource "vault_auth_backend" "all_the_auths" {
+  provider = vault.namespace01
+  for_each = toset(var.auths_to_mount)
+  type = each.key
+  path = each.key
+}
