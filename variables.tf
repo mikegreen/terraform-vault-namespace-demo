@@ -11,11 +11,11 @@ variable "vault_token" {
 
 variable "secrets_to_mount" {
 	type = list
-	# default = ["kv","kv-v2","pki","transit"]
+	default = ["kv","kv-v2","pki","transit"]
 
 }
 
 variable "auths_to_mount" {
 	type = list
-	# default = ["userpass","aws"]
+	default = ["userpass","aws"]
 }
