@@ -16,3 +16,8 @@ variable "auths_to_mount" {
   type    = list(any)
   default = ["github", "aws"]
 }
+
+variable "allow-subnamespaces" {
+  type    = bool
+  default = false
+}

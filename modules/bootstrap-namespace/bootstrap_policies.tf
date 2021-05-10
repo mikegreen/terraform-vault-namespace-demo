@@ -7,6 +7,15 @@ data "vault_policy_document" "admin_policy_content" {
   }
 }
 
+# Deny namespace mgmt policy
+data "vault_policy_document" "deny_ns_policy_content" {
+  rule {
+    path         = "sys/namespaces/*"
+    capabilities = ["deny"]
+    description  = "Policy to prevent namespace management"
+  }
+}
+
 # Policy to allow only 
 data "vault_policy_document" "secrets_manager_policy_content" {
   rule {
