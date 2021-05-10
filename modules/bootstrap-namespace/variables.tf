@@ -21,3 +21,8 @@ variable "allow-subnamespaces" {
   type    = bool
   default = false
 }
+
+variable "namespace-rate-limit" {
+  type    = number
+  default = 100
+}

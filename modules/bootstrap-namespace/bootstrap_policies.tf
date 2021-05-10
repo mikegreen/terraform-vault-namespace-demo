@@ -16,7 +16,7 @@ data "vault_policy_document" "deny_ns_policy_content" {
   }
 }
 
-# Policy to allow only 
+# Policy to allow secrets access
 data "vault_policy_document" "secrets_manager_policy_content" {
   rule {
     path         = "sys/mounts/*"
@@ -28,11 +28,6 @@ data "vault_policy_document" "secrets_manager_policy_content" {
     capabilities = ["read", "list"]
     description  = "Read all secret mounts"
   }
-  # rule {
-  #   path         = "sys/internal/ui/mounts"
-  #   capabilities = ["read", "list"]
-  #   description  = "Read all secret mounts in UI"
-  # }
   # setup the default secret engines that we have defaulted in the variables
   rule {
     path         = "${var.path-prefix}-kv/*"

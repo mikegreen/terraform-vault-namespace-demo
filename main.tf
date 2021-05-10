@@ -8,6 +8,7 @@ module "namespace01" {
   # we default to not allowing a new namespace to have namespaces under, 
   # this is due to the preference in a flat namespace architecture 
   # allow-subnamespaces = false
+  namespace-rate-limit = 100
   providers = {
     // vault.zone = vault.dev1
     vault.vault-root = vault.vault-root
@@ -15,9 +16,10 @@ module "namespace01" {
 }
 
 module "namespace02" {
-  source              = "./modules/bootstrap-namespace/"
-  new-namespace       = "FinanceTeam"
-  allow-subnamespaces = false
+  source               = "./modules/bootstrap-namespace/"
+  new-namespace        = "FinanceTeam"
+  allow-subnamespaces  = false
+  namespace-rate-limit = 20
   providers = {
     // vault.zone = vault.dev1
     vault.vault-root = vault.vault-root
@@ -25,9 +27,10 @@ module "namespace02" {
 }
 
 module "namespace03" {
-  source              = "./modules/bootstrap-namespace/"
-  new-namespace       = "ColoDataceterTeam"
-  allow-subnamespaces = true
+  source               = "./modules/bootstrap-namespace/"
+  new-namespace        = "ColoDataceterTeam"
+  allow-subnamespaces  = true
+  namespace-rate-limit = 50
   providers = {
     // vault.zone = vault.dev1
     vault.vault-root = vault.vault-root

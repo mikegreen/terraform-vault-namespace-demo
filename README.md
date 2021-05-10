@@ -11,6 +11,7 @@ We'll start with:
 
 1. Create root-level policy and read-only audit user, `audit_user/changeme` (root-namespace.tf)
 1. Create namespaces (main.tf)
+   1. You can set `allow-subnamespaces` to allow or disallow the namespace admin ability to create nested namespaces
 1. Define policies to allow a namespace-admin and a secrets-manager persona (modules/bootstrap-namespace/bootstrap_policies.tf)
 1. Build up namespaces (modules/bootstrap-namespace/main.tf)
    1. Create namespace
