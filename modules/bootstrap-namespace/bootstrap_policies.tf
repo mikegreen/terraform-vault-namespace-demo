@@ -1,4 +1,4 @@
-# # Create the data for the policy
+# Create the data for the policy
 data "vault_policy_document" "admin_policy_content" {
   rule {
     path         = "*"
@@ -19,27 +19,32 @@ data "vault_policy_document" "secrets_manager_policy_content" {
     capabilities = ["read", "list"]
     description  = "Read all secret mounts"
   }
+  # rule {
+  #   path         = "sys/internal/ui/mounts"
+  #   capabilities = ["read", "list"]
+  #   description  = "Read all secret mounts in UI"
+  # }
   # setup the default secret engines that we have defaulted in the variables
   rule {
-    path         = "kv"
+    path         = "${var.path-prefix}-kv/*"
     capabilities = ["create", "read", "update", "delete", "list"]
     description  = ""
   }
   rule {
-    path         = "kv-v2"
+    path         = "${var.path-prefix}-kv-v2/*"
     capabilities = ["create", "read", "update", "delete", "list"]
     description  = ""
   }
   rule {
-    path         = "pki"
+    path         = "${var.path-prefix}-pki/*"
     capabilities = ["create", "read", "update", "delete", "list"]
     description  = ""
   }
   rule {
-    path         = "transit"
+    path         = "${var.path-prefix}-transit/*"
     capabilities = ["create", "read", "update", "delete", "list"]
     description  = ""
-  }    
+  }
 }
 
 

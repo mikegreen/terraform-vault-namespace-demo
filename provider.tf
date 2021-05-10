@@ -4,7 +4,7 @@ terraform {
   required_providers {
     vault = {
       source  = "hashicorp/vault"
-      version = "~> 2.16"
+      version = "~> 2.0"
     }
   }
 }
@@ -13,7 +13,7 @@ terraform {
 provider "vault" {
   alias = "vault-root"
   # See above for credential recommendations for environment variables 
-  address = var.vault_addr
-  token   = var.vault_token
+  # address = var.vault_addr
+  # token   = var.vault_token
 }
 
