@@ -13,15 +13,13 @@ We'll start with:
 1. Create namespaces (main.tf)
 1. Define policies to allow a namespace-admin and a secrets-manager persona (modules/bootstrap-namespace/bootstrap_policies.tf)
 1. Build up namespaces (modules/bootstrap-namespace/main.tf)
-  1. Create namespace
-  1. Create admin-policy
-  1. Create secrets-manager-policy
-  1. Create tokens for each (yes, this isn't good practice but makes testing easier)
-  1. Create secrets mounts (based on variable secrets_to_mount)
-  1. Create auth mounts (based on variable auths_to_mount)
-  1. Create userpass auth and `user1/changeme` login
-1. 
-
+   1. Create namespace
+   1. Create admin-policy
+   1. Create secrets-manager-policy
+   1. Create tokens for each (yes, this isn't good practice but makes testing easier)
+   1. Create secrets mounts (based on variable secrets_to_mount)
+   1. Create auth mounts (based on variable auths_to_mount)
+   1. Create userpass auth and `user1/changeme` login
 
 ## Usage
 
