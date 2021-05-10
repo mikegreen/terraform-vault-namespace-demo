@@ -5,7 +5,7 @@ Note ~> Namespaces in Vault require Vault Enterprise.
 
 ## Purpose of this repo
 
-Using Terraform and the Vault provider, we want to create a namespace on an existing Vault cluster and add some usual bits to it, like policy, engine for secrets, and auth. 
+Using Terraform and the Vault provider, we want to create a namespace on an existing Vault cluster and add some usual bits to it, like [policy](https://www.vaultproject.io/docs/concepts/policies), engine for [secrets](https://www.vaultproject.io/docs/secrets), [rate limits](https://www.vaultproject.io/docs/concepts/resource-quotas#rate-limit-quotas), and [auth](https://www.vaultproject.io/docs/auth). 
 
 We'll start with: 
 
