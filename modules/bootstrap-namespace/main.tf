@@ -69,6 +69,7 @@ resource "vault_auth_backend" "userpass" {
 
 # Add rate limit of 100/sec across namespace to protect noisy neighbor issues
 resource "vault_quota_rate_limit" "namespace-wide-quota" {
+  depends_on = [vault_namespace.new-namespace]
   # From https://www.vaultproject.io/api/system/rate-limit-quotas#parameters
   name = "${var.new-namespace}-wide-quota"
   path = "${var.new-namespace}/"

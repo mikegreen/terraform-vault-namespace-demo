@@ -20,13 +20,18 @@ data "vault_policy_document" "deny_ns_policy_content" {
 data "vault_policy_document" "secrets_manager_policy_content" {
   rule {
     path         = "sys/mounts/*"
-    capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+    capabilities = ["read", "update", "delete", "list", "sudo"]
     description  = "Manage all secret mounts"
   }
   rule {
     path         = "sys/mounts"
     capabilities = ["read", "list"]
     description  = "Read all secret mounts"
+  }
+  rule {
+    path         = "/sys/internal/ui/mounts"
+    capabilities = ["read", "list"]
+    description  = "Read special mount for UI"
   }
   # setup the default secret engines that we have defaulted in the variables
   rule {
