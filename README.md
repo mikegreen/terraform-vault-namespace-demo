@@ -1,6 +1,8 @@
 # terraform-vault-namespace-demo
-Demo to create a namespace in Vault, add policy/secret engine all using Terraform
+Demo to create a namespace in Vault, add policy/secret engine all using Terraform.
+
 Feedback and additions welcome. 
+
 Note ~> Namespaces in Vault require Vault Enterprise. 
 
 ## Purpose of this repo
