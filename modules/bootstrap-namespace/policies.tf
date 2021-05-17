@@ -20,3 +20,4 @@ resource "vault_policy" "deny-ns-mgmt-policy" {
   name       = "${var.new-namespace}-deny-ns-mgmt-policy"
   policy     = data.vault_policy_document.deny_ns_policy_content.hcl
 }
+
