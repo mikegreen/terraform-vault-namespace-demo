@@ -66,15 +66,10 @@ data "vault_policy_document" "infosec_auditor_policy_content" {
     capabilities = ["list", ]
     description  = "List on usual tenant namespace secrets"
   }
-  # rule {
-  #   path         = "sys/capabilities-self"
-  #   capabilities = ["create", "read", "update", "list"]
-  #   description  = "Read special mount"
-  # }
   rule {
     path         = "+/sys/capabilities-self"
     capabilities = ["create", "read", "update", "list"]
-    description  = "Read special mount in tenant namespace"
+    description  = "Read special mount in tenant namespace, https://www.vaultproject.io/api/system/capabilities-self"
   }
 }
 
