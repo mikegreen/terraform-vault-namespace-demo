@@ -1,7 +1,8 @@
 # main.tf
 
 # to add a new namespace, copy an existing module and give it a new-namespace and namespace## increment
-
+# for real-world-use, it would be recommended to make a new file for each namespace and drop it in the 
+# same directory, ie ColoDataCenterTeam.tf and put that entire module call there 
 module "namespace01" {
   source        = "./modules/bootstrap-namespace/"
   new-namespace = "CloudOps"
