@@ -29,3 +29,5 @@ override.tf.json
 # example: *tfplan*
 .DS_Store
 local.auto.tfvars
+tf.vars.local
+aws/.terraform.lock.hcl
